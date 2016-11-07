@@ -2,6 +2,7 @@
 import random
 import sys
 import datetime
+import signal
 
 keys = ('abcdefghijklmnopqrstuvwxyz'
         #'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
@@ -30,6 +31,8 @@ def get_random_characters(keystrokes_per_try=keystrokes_per_try):
     return output
 
 def test_player(test_letters):
+    global correct
+    global incorrect
     start_time = datetime.datetime.now()
     player_letters = raw_input(test_letters + '\n')
     if (player_letters == test_letters):
@@ -41,10 +44,24 @@ def test_player(test_letters):
             seconds = delta.seconds
             micros = delta.microseconds
             print 'good job with time ' + str(seconds) + '.' + str(micros)
+            correct += 1
     else:
         print 'mistake. try again'
+        incorrect += 1
         test_player(test_letters)
 
+correct = 0
+incorrect = 0
+
+# Ctrl+C handling
+def signal_handler(signal, frame):
+    correct
+    incorrect
+    print 'You got ' + str(correct) + ' correct and ' + str(incorrect) + ' incorrect'
+    sys.exit(0)
+signal.signal(signal.SIGINT, signal_handler)
+
+# Event loop
 while (True):
     test_letters = get_random_characters()
     test_player(test_letters)
