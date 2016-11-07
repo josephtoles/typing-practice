@@ -54,12 +54,15 @@ correct = 0
 incorrect = 0
 
 # Ctrl+C handling
-def signal_handler(signal, frame):
+def end_game(signal, frame):
     correct
     incorrect
-    print 'You got ' + str(correct) + ' correct and ' + str(incorrect) + ' incorrect'
+    if (correct != 0 or incorrect != 0):
+        print 'You got ' + str(correct) + ' correct and ' + str(incorrect) + ' incorrect'
+    else:
+        print '' # starts newline after ^C
     sys.exit(0)
-signal.signal(signal.SIGINT, signal_handler)
+signal.signal(signal.SIGINT, end_game)
 
 # Event loop
 while (True):
