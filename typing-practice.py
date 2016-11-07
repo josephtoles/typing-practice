@@ -4,7 +4,7 @@ import sys
 import datetime
 import signal
 
-keys = ('abcdefghijklmnopqrstuvwxyz'
+keys_without_space = ('abcdefghijklmnopqrstuvwxyz'
         #'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
         '`1234567890-='
         '~!@#$%^&*()_+'
@@ -13,21 +13,20 @@ keys = ('abcdefghijklmnopqrstuvwxyz'
         ';\''
         ':"'
         ',./'
-        '<>?'
-        ' ')
+        '<>?')
+
+keys = keys_without_space + ' '
 
 if ('--letters-only' in sys.argv[1:]):
     keys = 'abcdefghijklmnopqrstuvwxyz'
 
-keystrokes_per_try = 12
-
-def get_random_character():
-    return random.choice(keys)
+keystrokes_per_try = 16
 
 def get_random_characters(keystrokes_per_try=keystrokes_per_try):
     output = ''
-    for i in range(0, keystrokes_per_try):
-        output += get_random_character()
+    for i in range(0, keystrokes_per_try - 1):
+        output += random.choice(keys)
+    output += random.choice(keys_without_space)
     return output
 
 def test_player(test_letters):
