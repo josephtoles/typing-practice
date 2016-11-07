@@ -15,6 +15,9 @@ keys = ('abcdefghijklmnopqrstuvwxyz'
         '<>?'
         ' ')
 
+if ('--letters-only' in sys.argv[1:]):
+    keys = 'abcdefghijklmnopqrstuvwxyz'
+
 keystrokes_per_try = 12
 
 def get_random_character():
